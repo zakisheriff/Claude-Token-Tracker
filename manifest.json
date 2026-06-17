@@ -1,10 +1,11 @@
 {
   "manifest_version": 3,
   "name": "Claude Token Tracker",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Native-style token, context, and usage tracking for Claude.ai. Built by The Atom.",
   "author": "The Atom",
-  "permissions": ["storage"],
+  "permissions": ["storage", "tabs"],
+  "host_permissions": ["https://claude.ai/*", "https://api.anthropic.com/*"],
   "action": {
     "default_popup": "popup.html",
     "default_title": "Claude Token Tracker",
@@ -31,7 +32,7 @@
     },
     {
       "matches": ["https://claude.ai/*"],
-      "js": ["content.js"],
+      "js": ["shared.js", "content.js"],
       "run_at": "document_start"
     }
   ]

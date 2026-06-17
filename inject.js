@@ -1,15 +1,30 @@
 // Runs in the page's own JS context (MAIN world) on claude.ai.
-// Anthropic does not publish a stable usage API for third parties, so instead
-// of guessing an endpoint, this observes the real network responses the
-// claude.ai app itself loads and picks out anything that looks like
-// usage/rate-limit telemetry. If Anthropic changes their internal API shape,
-// this degrades to "no data found" rather than breaking.
+// Captures real usage data from Anthropic API responses including token counts,
+// rate limits, and quotas. Observes fetch/XHR to detect usage telemetry.
 
 (function () {
   const USAGE_KEY_HINTS = [
     "five_hour", "seven_day", "utilization", "resets_at", "reset_at",
     "remaining", "rate_limit", "ratelimit", "usage", "quota", "message_limit",
+    "input_tokens", "output_tokens", "cache", "tokens_used",
   ];
+
+  function extractTokenCount(obj, depth = 0) {
+    if (!obj || typeof obj !== "object" || depth > 5) return null;
+    // Look for input/output token counts
+    for (const key of ["input_tokens", "output_tokens", "tokens_used", "total_tokens"]) {
+      if (typeof obj[key] === "number") return obj[key];
+    }
+    // Recursively search in nested objects
+    for (const key of Object.keys(obj)) {
+      const val = obj[key];
+      if (val && typeof val === "object") {
+        const found = extractTokenCount(val, depth + 1);
+        if (found) return found;
+      }
+    }
+    return null;
+  }
 
   function looksLikeUsagePayload(obj, depth = 0) {
     if (!obj || typeof obj !== "object" || depth > 4) return false;
@@ -39,7 +54,9 @@
     } catch {
       return;
     }
-    if (looksLikeUsagePayload(data)) emit(url, data);
+    if (looksLikeUsagePayload(data)) {
+      emit(url, data);
+    }
   }
 
   const originalFetch = window.fetch;

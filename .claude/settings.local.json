@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(magick -size 128x128 xc:none -fill '#0d0d0d' -draw 'roundrectangle 4,4,124,124,24,24' -fill none -stroke '#3a3a3a' -strokewidth 8 -draw 'circle 64,64 64,16' -fill none -stroke '#10a37f' -strokewidth 8 -draw 'ellipse 64,64 48,48 -90,225' icon-128.png)",
+      "Bash(magick icon-128.png -resize 48x48 icon-48.png)",
+      "Bash(magick icon-128.png -resize 16x16 icon-16.png)",
+      "Bash(git push *)"
+    ]
+  }
+}

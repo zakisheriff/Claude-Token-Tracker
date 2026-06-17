@@ -1,3 +1,11 @@
+:root {
+  --claude-orange: #d97757;
+  --claude-cream: #faf9f5;
+  --claude-dark: #141413;
+  --claude-gray: #b0aea5;
+  --claude-light: #e8e6dc;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -11,13 +19,13 @@ body {
     sans-serif;
   font-size: 13px;
   line-height: 1.5;
-  background: #ffffff;
-  color: #2d2d2d;
+  background: var(--claude-cream);
+  color: var(--claude-dark);
 }
 
 .tracker-container {
   padding: 20px;
-  background: #ffffff;
+  background: var(--claude-cream);
   min-height: 100vh;
 }
 
@@ -31,24 +39,23 @@ body {
 .tracker-title {
   font-size: 15px;
   font-weight: 600;
-  color: #2d2d2d;
+  color: var(--claude-dark);
   letter-spacing: 0;
 }
 
 .tracker-refresh {
   cursor: pointer;
   padding: 4px 8px;
-  color: #999999;
+  color: var(--claude-gray);
   font-size: 16px;
   border-radius: 4px;
   transition: color 0.2s ease, transform 0.3s ease;
-  background: #f5f5f5;
+  background: var(--claude-light);
 }
 
 .tracker-refresh:hover {
-  color: #2d2d2d;
-  background: #eeeeee;
-  transform: rotate(180deg);
+  color: var(--claude-dark);
+  background: #ddd9c9;
 }
 
 .tracker-metric {
@@ -65,67 +72,68 @@ body {
 
 .metric-label {
   font-weight: 500;
-  color: #666666;
+  color: var(--claude-gray);
   text-transform: lowercase;
   letter-spacing: 0;
 }
 
 .metric-separator {
-  color: #e0e0e0;
+  color: var(--claude-light);
   font-weight: 300;
 }
 
 .metric-value {
   font-size: 14px;
   font-weight: 600;
-  color: #2d2d2d;
+  color: var(--claude-dark);
   font-family: -apple-system, BlinkMacSystemFont, "Menlo", "Monaco", monospace;
 }
 
 .metric-max {
   font-size: 12px;
-  color: #999999;
+  color: var(--claude-gray);
   font-weight: 400;
 }
 
 .metric-percent {
   font-size: 12px;
-  color: #666666;
+  color: var(--claude-gray);
   margin-left: auto;
 }
 
 .metric-unit {
   font-size: 12px;
-  color: #999999;
+  color: var(--claude-gray);
   margin-left: auto;
 }
 
 .progress-bar {
   width: 100%;
   height: 4px;
-  background: #e8e8e8;
+  background: var(--claude-light);
   border-radius: 2px;
   overflow: hidden;
 }
 
 .progress-fill {
   height: 100%;
-  background: #2563eb;
+  background: var(--claude-orange);
   border-radius: 2px;
   transition: width 0.3s ease;
   width: 0%;
 }
 
 .session-bar .progress-fill {
-  background: #2563eb;
+  background: var(--claude-orange);
 }
 
 .weekly-bar .progress-fill {
-  background: #fb923c;
+  background: var(--claude-orange);
+  opacity: 0.7;
 }
 
 .progress-fill.warning {
-  background: #f97316;
+  background: #b45309;
 }
 
 .progress-fill.critical {
@@ -135,13 +143,13 @@ body {
 .tracker-footer {
   margin-top: 24px;
   padding-top: 16px;
-  border-top: 1px solid #e8e8e8;
+  border-top: 1px solid var(--claude-light);
   text-align: center;
 }
 
 .footer-text {
   font-size: 11px;
-  color: #999999;
+  color: var(--claude-gray);
   letter-spacing: 0;
 }
 
