@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Claude Token Tracker</title>
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <div class="tracker-container">
+    <div class="tracker-header">
+      <h2 class="tracker-title">Token Tracker</h2>
+      <div class="tracker-refresh" id="refreshBtn" title="Refresh">↻</div>
+    </div>
+
+    <div class="tracker-section">
+      <div class="metric-label">Context Window (estimated)</div>
+      <div class="token-display">
+        <div class="token-count" id="tokenCount">—</div>
+        <div class="token-unit">/ 200,000</div>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="tokenProgress"></div>
+      </div>
+      <div class="progress-labels">
+        <span class="progress-value" id="tokenPercentage">0%</span>
+        <span class="progress-status">estimated from visible text</span>
+      </div>
+    </div>
+
+    <div class="tracker-section">
+      <div class="metric-label">Session Usage (5h)</div>
+      <div class="usage-display">
+        <div class="usage-text">
+          <span class="usage-value" id="sessionUsage">—</span>
+        </div>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill session-fill" id="sessionProgress"></div>
+      </div>
+      <div class="progress-helper" id="sessionHelper">No data observed yet</div>
+    </div>
+
+    <div class="tracker-section">
+      <div class="metric-label">Weekly Usage (7d)</div>
+      <div class="usage-display">
+        <div class="usage-text">
+          <span class="usage-value" id="weeklyUsage">—</span>
+        </div>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill weekly-fill" id="weeklyProgress"></div>
+      </div>
+      <div class="progress-helper" id="weeklyHelper">No data observed yet</div>
+    </div>
+
+    <div class="tracker-warning" id="warningBanner" style="display: none">
+      <div class="warning-icon">⚠️</div>
+      <div class="warning-text" id="warningText">Approaching usage limit</div>
+    </div>
+
+    <div class="tracker-footer">
+      <a href="https://claude.ai/" class="footer-link" target="_blank">Open Claude</a>
+      <span class="footer-divider">•</span>
+      <span class="footer-timestamp" id="lastUpdated">No activity yet</span>
+    </div>
+    <div class="tracker-credit">Built by The Atom</div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
