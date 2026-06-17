@@ -6,195 +6,143 @@
 
 html,
 body {
-  width: 360px;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
-    "Helvetica Neue", sans-serif;
+  width: 400px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue",
+    sans-serif;
   font-size: 13px;
-  line-height: 1.45;
-  background: #0d0d0d;
-  color: #ececec;
+  line-height: 1.5;
+  background: #ffffff;
+  color: #2d2d2d;
 }
 
 .tracker-container {
-  padding: 16px;
+  padding: 20px;
+  background: #ffffff;
+  min-height: 100vh;
 }
 
 .tracker-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 16px;
+  margin-bottom: 24px;
 }
 
 .tracker-title {
-  font-size: 16px;
-  font-weight: 500;
-  color: #ececec;
+  font-size: 15px;
+  font-weight: 600;
+  color: #2d2d2d;
+  letter-spacing: 0;
 }
 
 .tracker-refresh {
   cursor: pointer;
-  padding: 6px;
-  color: #b4b4b4;
-  font-size: 14px;
+  padding: 4px 8px;
+  color: #999999;
+  font-size: 16px;
   border-radius: 4px;
   transition: color 0.2s ease, transform 0.3s ease;
+  background: #f5f5f5;
 }
 
 .tracker-refresh:hover {
-  color: #10a37f;
+  color: #2d2d2d;
+  background: #eeeeee;
   transform: rotate(180deg);
 }
 
-.tracker-section {
-  background: #1a1a1a;
-  border: 1px solid #3a3a3a;
-  border-radius: 4px;
-  padding: 12px;
-  margin-bottom: 12px;
-  transition: background 0.2s ease, border-color 0.2s ease;
+.tracker-metric {
+  margin-bottom: 20px;
 }
 
-.tracker-section:hover {
-  background: #2a2a2a;
-  border-color: #4a4a4a;
+.metric-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  font-size: 12px;
 }
 
 .metric-label {
-  font-size: 12px;
   font-weight: 500;
-  color: #8b8b8b;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  margin-bottom: 8px;
+  color: #666666;
+  text-transform: lowercase;
+  letter-spacing: 0;
 }
 
-.token-display {
-  display: flex;
-  align-items: baseline;
-  gap: 4px;
-  margin-bottom: 8px;
+.metric-separator {
+  color: #e0e0e0;
+  font-weight: 300;
 }
 
-.token-count {
-  font-size: 24px;
+.metric-value {
+  font-size: 14px;
   font-weight: 600;
-  font-family: "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", monospace;
-  letter-spacing: -0.5px;
+  color: #2d2d2d;
+  font-family: -apple-system, BlinkMacSystemFont, "Menlo", "Monaco", monospace;
 }
 
-.token-unit {
-  font-size: 13px;
-  color: #b4b4b4;
+.metric-max {
+  font-size: 12px;
+  color: #999999;
+  font-weight: 400;
+}
+
+.metric-percent {
+  font-size: 12px;
+  color: #666666;
+  margin-left: auto;
+}
+
+.metric-unit {
+  font-size: 12px;
+  color: #999999;
+  margin-left: auto;
 }
 
 .progress-bar {
   width: 100%;
-  height: 6px;
-  background: #3a3a3a;
-  border-radius: 3px;
+  height: 4px;
+  background: #e8e8e8;
+  border-radius: 2px;
   overflow: hidden;
-  margin-bottom: 8px;
 }
 
 .progress-fill {
   height: 100%;
-  background: #10a37f;
-  border-radius: 3px;
+  background: #2563eb;
+  border-radius: 2px;
   transition: width 0.3s ease;
   width: 0%;
 }
 
+.session-bar .progress-fill {
+  background: #2563eb;
+}
+
+.weekly-bar .progress-fill {
+  background: #fb923c;
+}
+
 .progress-fill.warning {
-  background: #f4a460;
+  background: #f97316;
 }
 
 .progress-fill.critical {
-  background: #d97706;
-}
-
-.progress-labels {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 12px;
-}
-
-.progress-value {
-  color: #10a37f;
-  font-weight: 500;
-}
-
-.progress-status {
-  color: #8b8b8b;
-}
-
-.usage-display {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 8px;
-}
-
-.usage-value {
-  font-size: 18px;
-  font-weight: 600;
-}
-
-.progress-helper {
-  font-size: 11px;
-  color: #8b8b8b;
-  margin-top: 8px;
-  text-align: right;
-}
-
-.tracker-warning {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  background: rgba(217, 119, 6, 0.15);
-  border: 1px solid rgba(217, 119, 6, 0.3);
-  border-radius: 4px;
-  padding: 10px 12px;
-  margin: 12px 0;
-}
-
-.warning-text {
-  font-size: 13px;
-  color: #f4a460;
+  background: #dc2626;
 }
 
 .tracker-footer {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  margin-top: 16px;
-  padding-top: 12px;
-  border-top: 1px solid #3a3a3a;
-  font-size: 12px;
-  color: #8b8b8b;
-}
-
-.footer-link {
-  color: #10a37f;
-  text-decoration: none;
-}
-
-.footer-link:hover {
-  color: #4caf50;
-}
-
-.footer-divider {
-  color: #3a3a3a;
-}
-
-.tracker-credit {
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid #e8e8e8;
   text-align: center;
-  font-size: 10px;
-  color: #5a5a5a;
-  margin-top: 6px;
-  letter-spacing: 0.3px;
+}
+
+.footer-text {
+  font-size: 11px;
+  color: #999999;
+  letter-spacing: 0;
 }
 
 @media (prefers-reduced-motion: reduce) {

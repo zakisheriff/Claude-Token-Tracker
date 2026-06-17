@@ -6,21 +6,16 @@ const els = {
   tokenPercentage: document.getElementById("tokenPercentage"),
   sessionUsage: document.getElementById("sessionUsage"),
   sessionProgress: document.getElementById("sessionProgress"),
-  sessionHelper: document.getElementById("sessionHelper"),
+  sessionReset: document.getElementById("sessionReset"),
   weeklyUsage: document.getElementById("weeklyUsage"),
   weeklyProgress: document.getElementById("weeklyProgress"),
-  weeklyHelper: document.getElementById("weeklyHelper"),
-  warningBanner: document.getElementById("warningBanner"),
-  warningText: document.getElementById("warningText"),
+  weeklyReset: document.getElementById("weeklyReset"),
   lastUpdated: document.getElementById("lastUpdated"),
   refreshBtn: document.getElementById("refreshBtn"),
 };
 
 document.addEventListener("DOMContentLoaded", render);
-els.refreshBtn.addEventListener("click", () => {
-  els.refreshBtn.style.transform = "rotate(180deg)";
-  render();
-});
+els.refreshBtn.addEventListener("click", render);
 
 function findSection(obj, hint, depth = 0) {
   if (!obj || typeof obj !== "object" || depth > 6) return null;
@@ -55,9 +50,11 @@ function resetLabel(section) {
   const diffMs = date.getTime() - Date.now();
   if (diffMs <= 0) return "resets soon";
   const hours = Math.round(diffMs / 3600000);
-  if (hours < 1) return "resets in <1h";
-  if (hours < 48) return `resets in ${hours}h`;
-  return `resets in ${Math.round(hours / 24)}d`;
+  const mins = Math.round((diffMs % 3600000) / 60000);
+  if (hours < 1) return `resets in ${mins}m`;
+  if (hours < 24) return `resets in ${hours}h ${mins}m`;
+  const days = Math.round(hours / 24);
+  return `resets in ${days}d`;
 }
 
 function setProgress(fillEl, percent) {
@@ -69,12 +66,18 @@ function setProgress(fillEl, percent) {
 }
 
 function timeAgo(timestamp) {
-  if (!timestamp) return "No activity yet";
+  if (!timestamp) return "no activity";
   const diffSec = Math.floor((Date.now() - timestamp) / 1000);
-  if (diffSec < 60) return "Active just now";
-  if (diffSec < 3600) return `Active ${Math.floor(diffSec / 60)}m ago`;
-  if (diffSec < 86400) return `Active ${Math.floor(diffSec / 3600)}h ago`;
-  return "Inactive";
+  if (diffSec < 60) return "active now";
+  if (diffSec < 3600) {
+    const m = Math.floor(diffSec / 60);
+    return `active ${m}m ago`;
+  }
+  if (diffSec < 86400) {
+    const h = Math.floor(diffSec / 3600);
+    return `active ${h}h ago`;
+  }
+  return "inactive";
 }
 
 function render() {
@@ -98,28 +101,18 @@ function render() {
         weeklyPct = pctFromSection(weeklySection);
 
         els.sessionUsage.textContent = sessionPct !== null ? sessionPct + "%" : "—";
-        els.sessionHelper.textContent =
-          resetLabel(sessionSection) || (sessionPct !== null ? "" : "No data observed yet");
+        els.sessionReset.textContent = resetLabel(sessionSection) || "no data";
         els.weeklyUsage.textContent = weeklyPct !== null ? weeklyPct + "%" : "—";
-        els.weeklyHelper.textContent =
-          resetLabel(weeklySection) || (weeklyPct !== null ? "" : "No data observed yet");
+        els.weeklyReset.textContent = resetLabel(weeklySection) || "no data";
       } else {
         els.sessionUsage.textContent = "—";
-        els.sessionHelper.textContent = "Open claude.ai and send a message to detect usage";
+        els.sessionReset.textContent = "no data";
         els.weeklyUsage.textContent = "—";
-        els.weeklyHelper.textContent = "Open claude.ai and send a message to detect usage";
+        els.weeklyReset.textContent = "no data";
       }
 
       setProgress(els.sessionProgress, sessionPct);
       setProgress(els.weeklyProgress, weeklyPct);
-
-      const high = [tokenPct, sessionPct, weeklyPct].some((p) => p !== null && p >= 85);
-      els.warningBanner.style.display = high ? "flex" : "none";
-      if (high) {
-        if (tokenPct >= 85) els.warningText.textContent = "Context window usage is high";
-        else if (sessionPct >= 85) els.warningText.textContent = "Session usage is high";
-        else els.warningText.textContent = "Weekly usage is high";
-      }
 
       els.lastUpdated.textContent = timeAgo(result.lastMessageTime);
     }
